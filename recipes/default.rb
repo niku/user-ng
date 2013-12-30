@@ -42,4 +42,12 @@ data_bag('users').each do |id|
       mode '0440'
     end
   end
+
+  if u['sudo_privilege']
+    template "/etc/sudoers.d/#{username}" do
+      source 'sudo_privilege.erb'
+      variables username: username, sudo_privilege: u['sudo_privilege']
+      mode '0440'
+    end
+  end
 end
