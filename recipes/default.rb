@@ -12,7 +12,7 @@ data_bag('users').each do |id|
   homedir = "/home/#{username}"
 
   user username do
-    supports manage_home: true
+    supports :manage_home => true
     home homedir
     shell u['shell'] || '/bin/bash'
   end
@@ -31,14 +31,14 @@ data_bag('users').each do |id|
       owner username
       group username
       mode '0400'
-      variables ssh_keys: u['ssh_keys']
+      variables :ssh_keys => u['ssh_keys']
     end
   end
 
   if u['sudo_privilege']
     template "/etc/sudoers.d/#{username}" do
       source 'sudo_privilege.erb'
-      variables username: username, sudo_privilege: u['sudo_privilege']
+      variables :username => username, :sudo_privilege => u['sudo_privilege']
       mode '0440'
     end
   end
@@ -46,7 +46,7 @@ data_bag('users').each do |id|
   if u['sudo_privilege']
     template "/etc/sudoers.d/#{username}" do
       source 'sudo_privilege.erb'
-      variables username: username, sudo_privilege: u['sudo_privilege']
+      variables :username => username, :sudo_privilege => u['sudo_privilege']
       mode '0440'
     end
   end
